@@ -5,6 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.Socket;
+import java.net.SocketException;
+
 public class LoginController {
 
     @FXML
@@ -18,6 +23,13 @@ public class LoginController {
         String input = emailInput.getText();
         if(!input.matches(Constants.EMAIL_REGEX))
             errorLabel.setText("Indirizzo email non valido");
+        else{
+            try(Socket socket = new Socket("localhost",Constants.PORT)){
+
+            }catch (IOException e) {
+                errorLabel.setText("Connessione non riuscita");
+            }
+        }
     }
 
 }

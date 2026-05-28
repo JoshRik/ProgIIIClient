@@ -11,7 +11,7 @@ public class MailClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MailClient.class.getResource("login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 550, 550);
         stage.setTitle("JMail!");
         stage.setScene(scene);
         stage.show();

@@ -2,6 +2,7 @@ package it.unito.progiii.progiiiclient.controllers;
 
 import it.unito.progiii.progiiiclient.utils.Constants;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -15,20 +16,23 @@ public class LoginController {
     @FXML
     private TextField emailInput;
 
-    @FXML
-    private Label errorLabel;
+    private void errPrint(String err) {
+        Alert error = new Alert(Alert.AlertType.ERROR);
+        error.setTitle("Errore");
+        error.setHeaderText("Accesso non riuscito");
+        error.setContentText(err);
+        error.showAndWait();
+    }
 
     @FXML
     private void submit() {
         String input = emailInput.getText();
-        if(!input.matches(Constants.EMAIL_REGEX))
-            errorLabel.setText("Indirizzo email non valido");
+        if(input.isEmpty())
+            errPrint("Inserire un indirizzo email");
+        else if(!input.matches(Constants.EMAIL_REGEX))
+            errPrint("Indirizzo email non valido");
         else{
-            try(Socket socket = new Socket("localhost",Constants.PORT)){
 
-            }catch (IOException e) {
-                errorLabel.setText("Connessione non riuscita");
-            }
         }
     }
 

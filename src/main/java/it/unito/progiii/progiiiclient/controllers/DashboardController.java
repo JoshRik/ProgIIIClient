@@ -8,6 +8,9 @@ import javafx.scene.paint.Color;
 public class DashboardController {
 
     @FXML
+    private Label userLabel;
+
+    @FXML
     private Label stateLabel;
 
     private StateManager stateManager;

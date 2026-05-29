@@ -1,0 +1,8 @@
+.label{
+    -fx-font-size: 20;
+}
+
+#submit-button{
+    -fx-background-color: blue;
+    -fx-text-fill: white;
+}

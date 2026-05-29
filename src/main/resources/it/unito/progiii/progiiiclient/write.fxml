@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@write.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="396.0" prefWidth="600.0" spacing="5" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets topRightBottomLeft="20" />
+         </padding>
+         <children>
+            <Label text="Destinatari (separati da spazi)" />
+            <TextField />
+            <Label text="Oggetto" />
+            <TextField />
+            <Label text="Contenuto" />
+            <TextArea prefHeight="255.0" prefWidth="600.0" />
+         </children>
+      </VBox>
    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0" spacing="55">
+         <children>
+            <Button id="submit-button" mnemonicParsing="false" text="Invia" />
+            <Button mnemonicParsing="false" text="Annulla" />
+         </children></HBox>
+   </bottom>
 </BorderPane>

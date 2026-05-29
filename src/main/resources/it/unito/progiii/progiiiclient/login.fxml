@@ -9,7 +9,7 @@
        <Insets left="60" right="60" />
    </padding>
     <children>
-      <Label style="-fx-font-size: 28px;-fx-font-weight: bold" text="JMail" />
+      <Label text="JMail" />
       <Label text="Inserire la mail" />
       <TextField promptText="Esempio: prova@example.com" fx:id="emailInput" />
       <Button mnemonicParsing="false" text="Login" onAction="#submit" />

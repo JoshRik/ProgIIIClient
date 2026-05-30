@@ -6,6 +6,7 @@ import it.unito.progiii.progiiiclient.state.StateManager;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 
 public class DashboardController {
@@ -16,9 +17,12 @@ public class DashboardController {
     @FXML
     private Label stateLabel;
 
+    @FXML
+    private ListView<Email> inboxView;
+
+    private ObservableList<Email> inbox;
     private StateManager stateManager;
     private PullTask pullTask;
-
 
 
     @FXML
@@ -35,4 +39,8 @@ public class DashboardController {
         stateManager = new StateManager();
     }
 
+    public void setInbox(ObservableList<Email> inbox) {
+        this.inbox = inbox;
+        inboxView.setItems(inbox);
+    }
 }

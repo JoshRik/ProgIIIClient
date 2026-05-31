@@ -4,12 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="50" fx:controller="it.unito.progiii.progiiiclient.controllers.LoginController" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox stylesheets="@login.css" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="50" fx:controller="it.unito.progiii.progiiiclient.controllers.LoginController" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <padding>
        <Insets left="60" right="60" />
    </padding>
     <children>
-      <Label text="JMail" />
+      <Label text="JMail" id="title" />
       <Label text="Inserire la mail" />
       <TextField promptText="Esempio: prova@example.com" fx:id="emailInput" />
       <Button mnemonicParsing="false" text="Login" onAction="#submit" />

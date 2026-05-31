@@ -3,3 +3,9 @@
     -fx-font-size: 20;
 }
 
+#write_button{
+    -fx-background-color: green;
+    -fx-effect: none;
+    -fx-text-fill: white;
+    -fx-border-style: none;
+}

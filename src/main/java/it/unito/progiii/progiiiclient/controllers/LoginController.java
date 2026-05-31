@@ -1,25 +1,59 @@
 package it.unito.progiii.progiiiclient.controllers;
 
+import it.unito.progiii.progiiiclient.UIManager;
+import it.unito.progiii.progiiiclient.model.Email;
 import it.unito.progiii.progiiiclient.network.MessageBuffer;
+import it.unito.progiii.progiiiclient.utils.ConnectUtils;
 import it.unito.progiii.progiiiclient.utils.Constants;
 import it.unito.progiii.progiiiclient.utils.PopupUtils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class LoginController {
 
     @FXML
     private TextField emailInput;
 
-    private MessageBuffer composeLoadRequest(String address) {
-        MessageBuffer request = new MessageBuffer();
+    private MessageBuffer request;
+    private MessageBuffer response;
+
+    private void composeLoadRequest(String address) {
         request.appendData("operation=load");
         request.appendData("from="+address);
-        request.appendData("END");
-        return request;
     }
+
+    @FXML
+    private void initialize() {
+        request = new MessageBuffer();
+        response = new MessageBuffer();
+    }
+
+    private boolean load(String address) {
+        boolean connected = true;
+        try (
+                Socket socket = new Socket("localhost",Constants.PORT);
+                PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+                Scanner in = new Scanner(socket.getInputStream())
+        ){
+            composeLoadRequest(address);
+            ConnectUtils.sendMessage(request,out);
+            ConnectUtils.receiveMessage(response,in);
+        }catch (IOException e) {
+            e.printStackTrace();
+            connected = false;
+        }
+        return connected;
+    }
+
 
     @FXML
     private void submit() {
@@ -28,10 +62,22 @@ public class LoginController {
             PopupUtils.showError("Accesso fallito","Inserire un indirizzo email, es: foobar@example.com");
         else if(!input.matches(Constants.EMAIL_REGEX))
             PopupUtils.showError("Accesso fallito","Indirizzo email non valido");
-        else{
-            MessageBuffer request = composeLoadRequest(input);
-
+        else if(!load(input))
+            PopupUtils.showError("Accesso fallito","server non raggiungibile");
+        else {
+            String content = response.getContent();
+            Email[] emails = Constants.GSON.fromJson(content,Email[].class);
+            ObservableList<Email> inbox = FXCollections.observableArrayList(Arrays.asList(emails));
+            UIManager.login(input,inbox);
+            closeStage();
+            request.clear();
+            response.clear();
         }
+    }
+
+    public void closeStage() {
+        Stage stage = (Stage) emailInput.getScene().getWindow();
+        stage.close();
     }
 
 }

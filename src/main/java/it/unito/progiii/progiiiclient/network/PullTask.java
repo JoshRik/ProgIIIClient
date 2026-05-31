@@ -11,18 +11,12 @@ import java.net.Socket;
 
 public class PullTask implements Runnable{
 
-    private boolean open;
     private StateManager stateManager;
     private ObservableList<Email> inbox;
 
     public PullTask(ObservableList<Email> inbox, StateManager stateManager) {
         this.inbox = inbox;
         this.stateManager = stateManager;
-        open = false;
-    }
-
-    public void stop() {
-         open = false;
     }
 
     @Override

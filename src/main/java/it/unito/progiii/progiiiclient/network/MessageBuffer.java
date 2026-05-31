@@ -44,8 +44,11 @@ public class MessageBuffer {
     public String getContent() {
         StringBuilder sb = new StringBuilder();
         if(hasContent()) {
-            for(int K=contentIndex()+1;K<messageData.size();K++)
-                sb.append(messageData.get(K)).append("\n");
+            for(int K=contentIndex()+1;K<messageData.size();K++) {
+                sb.append(messageData.get(K));
+                if(K<messageData.size()-1)
+                    sb.append("\n");
+            }
         }
         return sb.toString();
     }
@@ -54,5 +57,8 @@ public class MessageBuffer {
         return messageData.size();
     }
 
+    public void clear() {
+        messageData.clear();
+    }
 
 }

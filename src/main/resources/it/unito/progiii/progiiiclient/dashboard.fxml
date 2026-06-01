@@ -17,11 +17,11 @@
          <children>
             <Label id="user-label" fx:id="userLabel" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label fx:id="stateLabel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button id="write_button" mnemonicParsing="false" text="Scrivi" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button id="write_button" onAction="#write" mnemonicParsing="false" text="Scrivi" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"  />
          </children>
       </GridPane>
    </top>
    <center>
-      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" fx:id="inboxView" />
    </center>
 </BorderPane>

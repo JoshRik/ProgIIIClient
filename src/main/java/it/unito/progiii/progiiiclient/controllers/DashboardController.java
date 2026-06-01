@@ -1,5 +1,6 @@
 package it.unito.progiii.progiiiclient.controllers;
 
+import it.unito.progiii.progiiiclient.UIManager;
 import it.unito.progiii.progiiiclient.model.Email;
 import it.unito.progiii.progiiiclient.network.PullTask;
 import it.unito.progiii.progiiiclient.state.StateManager;
@@ -43,10 +44,20 @@ public class DashboardController {
     public void setInbox(ObservableList<Email> inbox) {
         this.inbox = inbox;
         inboxView.setItems(inbox);
+        inboxView.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getClickCount() == 2) {
+
+            }
+        });
     }
 
     public void setAddress(String address) {
         this.address = address;
         userLabel.setText(address);
+    }
+
+    @FXML
+    private void write() {
+        UIManager.openWrite(address);
     }
 }

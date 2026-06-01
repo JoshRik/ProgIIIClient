@@ -9,7 +9,7 @@ public class Email {
     private String sender;
     private Vector<String> receivers;
     private LocalDate sendDate;
-    private String title;
+    private String subject;
     private String text;
 
     public Email(long id, String sender, LocalDate sendDate, String title, String text) {
@@ -17,7 +17,7 @@ public class Email {
         this.sender = sender;
         this.receivers = new Vector<>();
         this.sendDate = sendDate;
-        this.title = title;
+        this.subject = title;
         this.text = text;
     }
 
@@ -37,8 +37,8 @@ public class Email {
         return sendDate;
     }
 
-    public String getTitle() {
-        return title;
+    public String getSubject() {
+        return subject;
     }
 
     public String getText() {
@@ -59,5 +59,11 @@ public class Email {
             receivers.add(receiver);
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(subject).append("\n");
+        sb.append(sender).append("\n");
+        return sb.toString();
+    }
 }

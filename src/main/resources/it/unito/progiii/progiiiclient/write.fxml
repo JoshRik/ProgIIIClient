@@ -4,27 +4,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@write.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="it.unito.progiii.progiiiclient.controllers.WriteController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@write.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox prefHeight="396.0" prefWidth="600.0" spacing="5" BorderPane.alignment="CENTER">
          <padding>
-            <Insets topRightBottomLeft="20" />
+            <Insets topRightBottomLeft="20"/>
          </padding>
-         <children>
-            <Label text="Destinatari (separati da spazi)" />
-            <TextField />
-            <Label text="Oggetto" />
-            <TextField />
-            <Label text="Contenuto" />
-            <TextArea prefHeight="255.0" prefWidth="600.0" />
-         </children>
+         <Label text="Destinatari (separati da spazi)"/>
+         <TextField fx:id="receiversInput"/>
+         <Label text="Oggetto"/>
+         <TextField fx:id="subjectInput"/>
+         <Label text="Contenuto"/>
+         <TextArea fx:id="contentText" prefHeight="255.0" prefWidth="600.0"/>
       </VBox>
    </center>
    <bottom>
       <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0" spacing="55">
-         <children>
-            <Button id="submit-button" mnemonicParsing="false" text="Invia" />
-            <Button mnemonicParsing="false" text="Annulla" />
-         </children></HBox>
+         <Button id="submit-button" mnemonicParsing="false" text="Invia" onAction="#sendEmail"/>
+         <Button mnemonicParsing="false" text="Annulla" onAction="#close"/>
+      </HBox>
    </bottom>
 </BorderPane>

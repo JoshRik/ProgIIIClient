@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@message.css" fx:controller="it.unito.progiii.progiiiclient.controllers.MessageController" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+       <HBox alignment="CENTER" prefHeight="47.0" prefWidth="600.0" spacing="25" BorderPane.alignment="CENTER">
+           <Button mnemonicParsing="false" text="Inoltra"/>
+           <Button mnemonicParsing="false" text="Rispondi"/>
+           <Button id="delete_button" mnemonicParsing="false" text="Elimina"/>
+       </HBox>
+   </bottom>
+   <center>
+       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+           <padding>
+               <Insets topRightBottomLeft="35"/>
+           </padding>
+           <Label styleClass="info" text="Mittente"/>
+           <Label fx:id="senderLabel"/>
+           <Label styleClass="info" text="Data"/>
+           <Label fx:id="dateLabel" />
+           <Label styleClass="info" text="Oggetto"/>
+           <Label fx:id="subjectLabel"/>
+           <Label styleClass="info" text="Contenuto"/>
+           <TextArea fx:id="contentTextArea" prefHeight="213.0" prefWidth="600.0" disable="true"/>
+       </VBox>
+   </center>
+</BorderPane>

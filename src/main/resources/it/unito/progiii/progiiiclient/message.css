@@ -1,0 +1,13 @@
+.button{
+    -fx-effect: none;
+}
+
+#delete_button{
+    -fx-text-fill: white;
+    -fx-background-color: red;
+}
+
+.info{
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}

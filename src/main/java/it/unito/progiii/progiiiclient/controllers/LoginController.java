@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class LoginController {
@@ -65,11 +66,16 @@ public class LoginController {
         else if(!load(input))
             PopupUtils.showError("Accesso fallito","server non raggiungibile");
         else {
-            String content = response.getContent();
-            Email[] emails = Constants.GSON.fromJson(content,Email[].class);
-            ObservableList<Email> inbox = FXCollections.observableArrayList(Arrays.asList(emails));
-            UIManager.login(input,inbox);
-            closeStage();
+            HashMap<String,String> headers = response.getHeaders();
+            int status = Integer.parseInt(headers.get("status"));
+            if(status==0) {
+                String content = response.getContent();
+                Email[] emails = Constants.GSON.fromJson(content,Email[].class);
+                ObservableList<Email> inbox = FXCollections.observableArrayList(Arrays.asList(emails));
+                UIManager.login(input,inbox);
+                closeStage();
+            }else
+                PopupUtils.showError("Accesso fallito","Indirizzo email non trovato");
             request.clear();
             response.clear();
         }

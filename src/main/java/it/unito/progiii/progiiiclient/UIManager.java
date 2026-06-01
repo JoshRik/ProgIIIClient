@@ -24,4 +24,18 @@ public class UIManager {
         }
     }
 
+    public static void openMessage(String address,ObservableList<Email> inbox,Email email) {
+        Stage stage = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(UIManager.class.getResource("message.fxml"));
+            Scene scene = new Scene(loader.load(),600,600);
+            stage.setTitle("Messaggio");
+            stage.setScene(scene);
+
+            stage.show();
+        }catch (IOException e) {
+            PopupUtils.showError(e.getClass().getName(),e.getMessage());
+        }
+    }
+
 }

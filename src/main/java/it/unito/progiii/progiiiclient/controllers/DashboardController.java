@@ -20,6 +20,7 @@ public class DashboardController {
     @FXML
     private ListView<Email> inboxView;
 
+    private String address;
     private ObservableList<Email> inbox;
     private StateManager stateManager;
     private PullTask pullTask;
@@ -42,5 +43,10 @@ public class DashboardController {
     public void setInbox(ObservableList<Email> inbox) {
         this.inbox = inbox;
         inboxView.setItems(inbox);
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+        userLabel.setText(address);
     }
 }

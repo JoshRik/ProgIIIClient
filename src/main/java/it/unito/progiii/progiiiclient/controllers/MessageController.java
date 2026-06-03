@@ -36,5 +36,20 @@ public class MessageController {
         return email;
     }
 
+    @FXML
+    private void reply() {
+
+    }
+
+    @FXML
+    private void forward() {
+
+    }
+
+    @FXML
+    private void delete() {
+
+    }
+
 
 }

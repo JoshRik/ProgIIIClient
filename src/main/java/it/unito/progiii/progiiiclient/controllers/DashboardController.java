@@ -10,6 +10,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class DashboardController {
 
     @FXML
@@ -25,6 +29,7 @@ public class DashboardController {
     private ObservableList<Email> inbox;
     private StateManager stateManager;
     private PullTask pullTask;
+    private ScheduledExecutorService pullScheduler;
 
 
     @FXML
@@ -38,7 +43,6 @@ public class DashboardController {
             case CONNECTED -> Color.GREEN;
             case DISCONNECTED -> Color.RED;
         }));
-        stateManager = new StateManager();
     }
 
     public void setInbox(ObservableList<Email> inbox) {
@@ -51,13 +55,27 @@ public class DashboardController {
         });
     }
 
-    public void setAddress(String address) {
+    private void startScheduler() {
+        pullScheduler = Executors.newSingleThreadScheduledExecutor();
+        pullScheduler.scheduleAtFixedRate(pullTask,0,2, TimeUnit.SECONDS);
+    }
+
+    public void putParameters(String address,ObservableList<Email> inbox) {
         this.address = address;
+        this.inbox = inbox;
         userLabel.setText(address);
+        pullTask = new PullTask(address,inbox,stateManager);
+        inboxView.setItems(inbox);
+        startScheduler();
     }
 
     @FXML
     private void write() {
         UIManager.openWrite(address);
     }
+
+    public void stopScheduler() {
+        pullScheduler.shutdownNow();
+    }
+
 }

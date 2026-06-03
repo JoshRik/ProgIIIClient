@@ -19,8 +19,11 @@ public class UIManager {
             FXMLLoader loader = new FXMLLoader(UIManager.class.getResource("dashboard.fxml"));
             Scene scene = new Scene(loader.load(),600,600);
             DashboardController controller = loader.getController();
-            controller.setAddress(address);
+            controller.putParameters(address,inbox);
             controller.setInbox(inbox);
+            stage.setOnCloseRequest(windowEvent -> {
+                controller.stopScheduler();
+            });
             stage.setTitle(address);
             stage.setScene(scene);
             stage.show();

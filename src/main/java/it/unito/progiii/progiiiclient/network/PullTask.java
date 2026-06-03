@@ -1,9 +1,11 @@
 package it.unito.progiii.progiiiclient.network;
 
 import it.unito.progiii.progiiiclient.model.Email;
+import it.unito.progiii.progiiiclient.state.ConnectState;
 import it.unito.progiii.progiiiclient.state.StateManager;
 import it.unito.progiii.progiiiclient.utils.ConnectUtils;
 import it.unito.progiii.progiiiclient.utils.Constants;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
@@ -50,6 +52,7 @@ public class PullTask implements Runnable{
                 Scanner in = new Scanner(socket.getInputStream());
                 PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
         ){
+            Platform.runLater(() -> stateManager.setState(ConnectState.CONNECTED));
             composeRequest();
             ConnectUtils.sendMessage(request,out);
             ConnectUtils.receiveMessage(response,in);
@@ -57,7 +60,7 @@ public class PullTask implements Runnable{
             request.clear();
             response.clear();
         }catch (IOException e) {
-            stateManager.putDisconnected();
+            Platform.runLater(() -> stateManager.setState(ConnectState.DISCONNECTED));
         }
     }
 }

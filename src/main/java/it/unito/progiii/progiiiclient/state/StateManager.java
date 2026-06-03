@@ -19,12 +19,7 @@ public class StateManager {
         return state.get();
     }
 
-    public void putConnected() {
-        state.set(ConnectState.CONNECTED);
+    public void setState(ConnectState state) {
+        this.state.set(state);
     }
-
-    public void putDisconnected() {
-        state.set(ConnectState.DISCONNECTED);
-    }
-
 }

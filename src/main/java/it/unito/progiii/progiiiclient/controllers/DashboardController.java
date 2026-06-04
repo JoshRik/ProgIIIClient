@@ -6,8 +6,10 @@ import it.unito.progiii.progiiiclient.network.PullTask;
 import it.unito.progiii.progiiiclient.state.StateManager;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
 import java.util.concurrent.Executors;
@@ -15,6 +17,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class DashboardController {
+
+    @FXML
+    private BorderPane root;
 
     @FXML
     private Label userLabel;
@@ -43,16 +48,36 @@ public class DashboardController {
             case CONNECTED -> Color.GREEN;
             case DISCONNECTED -> Color.RED;
         }));
+        root.setOnMousePressed(event -> {
+            Node target = (Node) event.getTarget();
+
+            while (target != null) {
+                if (target == inboxView) {
+                    return; // click sulla ListView
+                }
+                target = target.getParent();
+            }
+
+            // click fuori dalla ListView
+            inboxView.getSelectionModel().clearSelection();
+        });
     }
 
     public void setInbox(ObservableList<Email> inbox) {
         this.inbox = inbox;
         inboxView.setItems(inbox);
         inboxView.setOnMouseClicked(mouseEvent -> {
-            if(mouseEvent.getClickCount() == 2) {
-
+            if(mouseEvent.getClickCount()==2) {
+                Email email = inboxView.getSelectionModel().getSelectedItem();
+                if(email!=null) {
+                    UIManager.openMessage(address,inbox,email);
+                    inboxView.getSelectionModel().clearSelection();
+                }
             }
+            if(inboxView.getSelectionModel().getSelectedIndex()<0)
+                inboxView.getSelectionModel().clearSelection();
         });
+
     }
 
     private void startScheduler() {

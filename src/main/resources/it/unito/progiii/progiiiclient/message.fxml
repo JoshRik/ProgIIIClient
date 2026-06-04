@@ -9,7 +9,7 @@
        <HBox alignment="CENTER" prefHeight="47.0" prefWidth="600.0" spacing="25" BorderPane.alignment="CENTER">
            <Button mnemonicParsing="false" text="Inoltra"/>
            <Button mnemonicParsing="false" text="Rispondi"/>
-           <Button id="delete_button" mnemonicParsing="false" text="Elimina"/>
+           <Button id="delete_button" mnemonicParsing="false" text="Elimina" onAction="#delete"/>
        </HBox>
    </bottom>
    <center>
@@ -24,7 +24,7 @@
            <Label styleClass="info" text="Oggetto"/>
            <Label fx:id="subjectLabel"/>
            <Label styleClass="info" text="Contenuto"/>
-           <TextArea fx:id="contentTextArea" prefHeight="213.0" prefWidth="600.0" disable="true"/>
+           <TextArea fx:id="contentTextArea" prefHeight="213.0" prefWidth="600.0" editable="false"/>
        </VBox>
    </center>
 </BorderPane>

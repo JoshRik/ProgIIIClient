@@ -38,23 +38,6 @@ public class LoginController {
         response = new MessageBuffer();
     }
 
-    private boolean load(String address) {
-        boolean connected = true;
-        try (
-                Socket socket = new Socket("localhost",Constants.PORT);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
-                Scanner in = new Scanner(socket.getInputStream())
-        ){
-            composeLoadRequest(address);
-            ConnectUtils.sendMessage(request,out);
-            ConnectUtils.receiveMessage(response,in);
-        }catch (IOException e) {
-            e.printStackTrace();
-            connected = false;
-        }
-        return connected;
-    }
-
 
     @FXML
     private void submit() {
@@ -63,22 +46,24 @@ public class LoginController {
             PopupUtils.showError("Accesso fallito","Inserire un indirizzo email, es: foobar@example.com");
         else if(!input.matches(Constants.EMAIL_REGEX))
             PopupUtils.showError("Accesso fallito","Indirizzo email non valido");
-        else if(!load(input))
-            PopupUtils.showError("Accesso fallito","server non raggiungibile");
         else {
-            HashMap<String,String> headers = response.getHeaders();
-            int status = Integer.parseInt(headers.get("status"));
-            if(status==0) {
-                String content = response.getContent();
-                Email[] emails = Constants.GSON.fromJson(content,Email[].class);
-                ObservableList<Email> inbox = FXCollections.observableArrayList(Arrays.asList(emails));
-                UIManager.login(input,inbox);
-                closeStage();
+            composeLoadRequest(input);
+            if(ConnectUtils.communicate(request,response)) {
+                HashMap<String,String> headers = response.getHeaders();
+                int status = Integer.parseInt(headers.get("status"));
+                if(status==0) {
+                    String content = response.getContent();
+                    Email[] emails = Constants.GSON.fromJson(content,Email[].class);
+                    ObservableList<Email> inbox = FXCollections.observableArrayList(Arrays.asList(emails));
+                    UIManager.login(input,inbox);
+                    closeStage();
+                }else
+                    PopupUtils.showError("Accesso fallito","Indirizzo email non trovato");
             }else
-                PopupUtils.showError("Accesso fallito","Indirizzo email non trovato");
-            request.clear();
-            response.clear();
+                PopupUtils.showError(null,"Server non raggiungibile");
         }
+        request.clear();
+        response.clear();
     }
 
     public void closeStage() {

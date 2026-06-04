@@ -8,12 +8,6 @@ import it.unito.progiii.progiiiclient.utils.Constants;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.Scanner;
-
 public class PullTask implements Runnable{
 
     private String address;
@@ -48,19 +42,12 @@ public class PullTask implements Runnable{
     @Override
     public void run() {
         composeRequest();
-        try (
-                Socket socket = new Socket("localhost",Constants.PORT);
-                Scanner in = new Scanner(socket.getInputStream());
-                PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
-        ){
-            Platform.runLater(() -> stateManager.setState(ConnectState.CONNECTED));
-            ConnectUtils.sendMessage(request,out);
-            ConnectUtils.receiveMessage(response,in);
+        if(ConnectUtils.communicate(request,response)) {
+            Platform.runLater( () -> stateManager.setState(ConnectState.CONNECTED));
             parse();
-            request.clear();
-            response.clear();
-        }catch (IOException e) {
-            Platform.runLater(() -> stateManager.setState(ConnectState.DISCONNECTED));
-        }
+        }else
+            Platform.runLater( () -> stateManager.setState(ConnectState.DISCONNECTED));
+        request.clear();
+        response.clear();
     }
 }

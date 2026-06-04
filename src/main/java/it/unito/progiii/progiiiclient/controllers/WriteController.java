@@ -1,6 +1,7 @@
 package it.unito.progiii.progiiiclient.controllers;
 
 import it.unito.progiii.progiiiclient.network.MessageBuffer;
+import it.unito.progiii.progiiiclient.utils.AddressUtils;
 import it.unito.progiii.progiiiclient.utils.ConnectUtils;
 import it.unito.progiii.progiiiclient.utils.Constants;
 import it.unito.progiii.progiiiclient.utils.PopupUtils;
@@ -32,6 +33,7 @@ public class WriteController {
     private MessageBuffer request;
     private MessageBuffer response;
 
+    @FXML
     private void initialize() {
         request = new MessageBuffer();
         response = new MessageBuffer();
@@ -58,50 +60,31 @@ public class WriteController {
     public void parseResponse() {
         HashMap<String,String> headers = response.getHeaders();
         int status = Integer.parseInt(headers.get("status"));
-        if(status!=0) {
-            switch (status) {
-                case 3 : {
-                    PopupUtils.showError("Messaggio non inviato","uno o più indirizzi email non esiste");
-                    break;
-                }
-                case 5 : {
-                    PopupUtils.showError("Messaggio non inviato","Errore interno del server");
-                    break;
-                }
-            }
-        } else {
+        if(status==5) {
+            PopupUtils.showError("Messaggio non inviato","Errore interno del server");
+        }else if(status==3)
+            PopupUtils.showError("Messaggio non inviato","uno o più indirizzi email non esiste");
+        else if(status==1)
+            PopupUtils.showError(null,"richiesta malformata");
+        else{
             PopupUtils.showInfo("Messaggio inviato");
             close();
         }
     }
 
-    private boolean validateEmail() {
-        for(String receiver:receiversInput.getText().split(" ")) {
-            if(!receiver.matches(Constants.EMAIL_REGEX) || receiver.isEmpty())
-                return false;
-        }
-        return true;
-    }
 
     @FXML
     private void sendEmail() {
         if(receiversInput.getText().isEmpty())
             PopupUtils.showError("Messaggio non inviato","Elenco dei destinatari vuoto");
-        else if(!validateEmail())
+        else if(!AddressUtils.checkReceiversValid(receiversInput.getText()))
             PopupUtils.showError("Messaggio non inviato","Uno o più indirizzi email sono stati scritti in forma errata");
         else {
-            try (
-                    Socket socket = new Socket("localhost", Constants.PORT);
-                    PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
-                    Scanner in = new Scanner(socket.getInputStream())
-            ){
-                composeRequest();
-                ConnectUtils.sendMessage(request,out);
-                ConnectUtils.receiveMessage(response,in);
+            composeRequest();
+            if(ConnectUtils.communicate(request,response))
                 parseResponse();
-            }catch (IOException e) {
-                PopupUtils.showError("Mail non inviata",e.getMessage());
-            }
+            else
+                PopupUtils.showError(null,"Connessione interrotta");
         }
         request.clear();
         response.clear();

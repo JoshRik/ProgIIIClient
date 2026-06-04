@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HexFormat;
 import java.util.Optional;
@@ -42,8 +43,12 @@ public class MessageController {
         this.address = address;
     }
 
-    public Email getEmail() {
-        return email;
+    public void setEmail(Email email) {
+        this.email = email;
+        senderLabel.setText(email.getSender());
+        subjectLabel.setText(email.getSubject());
+        dateLabel.setText(email.getSendDate().toString());
+        contentTextArea.setText(email.getText());
     }
 
     @FXML

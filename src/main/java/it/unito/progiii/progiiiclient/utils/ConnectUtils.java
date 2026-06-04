@@ -31,7 +31,7 @@ public class ConnectUtils {
         try (
                 Socket socket = new Socket("localhost",Constants.PORT);
                 Scanner in = new Scanner(socket.getInputStream());
-                PrintWriter out = new PrintWriter(socket.getOutputStream())
+                PrintWriter out = new PrintWriter(socket.getOutputStream(),true)
                 ) {
             sendMessage(request,out);
             receiveMessage(response,in);

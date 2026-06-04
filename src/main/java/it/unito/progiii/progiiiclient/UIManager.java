@@ -1,6 +1,7 @@
 package it.unito.progiii.progiiiclient;
 
 import it.unito.progiii.progiiiclient.controllers.DashboardController;
+import it.unito.progiii.progiiiclient.controllers.MessageController;
 import it.unito.progiii.progiiiclient.controllers.WriteController;
 import it.unito.progiii.progiiiclient.model.Email;
 import it.unito.progiii.progiiiclient.utils.PopupUtils;
@@ -39,7 +40,10 @@ public class UIManager {
             Scene scene = new Scene(loader.load(),600,600);
             stage.setTitle("Messaggio");
             stage.setScene(scene);
-
+            MessageController controller = loader.getController();
+            controller.setAddress(address);
+            controller.setInbox(inbox);
+            controller.setEmail(email);
             stage.show();
         }catch (IOException e) {
             PopupUtils.showError(e.getClass().getName(),e.getMessage());

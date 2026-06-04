@@ -47,13 +47,13 @@ public class PullTask implements Runnable{
 
     @Override
     public void run() {
+        composeRequest();
         try (
                 Socket socket = new Socket("localhost",Constants.PORT);
                 Scanner in = new Scanner(socket.getInputStream());
                 PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
         ){
             Platform.runLater(() -> stateManager.setState(ConnectState.CONNECTED));
-            composeRequest();
             ConnectUtils.sendMessage(request,out);
             ConnectUtils.receiveMessage(response,in);
             parse();

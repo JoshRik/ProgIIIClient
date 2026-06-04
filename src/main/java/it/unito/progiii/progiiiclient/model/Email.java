@@ -5,7 +5,7 @@ import java.util.Vector;
 
 public class Email {
 
-    public long id;
+    private long id;
     private String sender;
     private Vector<String> receivers;
     private LocalDate sendDate;

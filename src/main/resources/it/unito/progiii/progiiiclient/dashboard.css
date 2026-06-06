@@ -3,9 +3,17 @@
     -fx-font-size: 20;
 }
 
+.button{
+    -fx-border-style: none;
+    -fx-effect: none;
+}
+
 #write_button{
     -fx-background-color: green;
-    -fx-effect: none;
     -fx-text-fill: white;
-    -fx-border-style: none;
+}
+
+#delete_button{
+    -fx-text-fill: white;
+    -fx-background-color: red;
 }

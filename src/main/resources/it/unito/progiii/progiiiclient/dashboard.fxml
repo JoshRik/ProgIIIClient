@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:id="root" fx:controller="it.unito.progiii.progiiiclient.controllers.DashboardController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.progiii.progiiiclient.controllers.DashboardController">
    <top>
       <GridPane prefHeight="49.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -17,11 +17,19 @@
          <children>
             <Label id="user-label" fx:id="userLabel" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label fx:id="stateLabel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button id="write_button" onAction="#write" mnemonicParsing="false" text="Scrivi" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"  />
+            <Button id="write_button" mnemonicParsing="false" onAction="#write" text="Scrivi" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </top>
    <center>
-      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" fx:id="inboxView" />
+      <ListView fx:id="inboxView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
+   <right>
+       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30" BorderPane.alignment="CENTER">
+         <Button mnemonicParsing="false" text="Dettagli" />
+           <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" text="Inoltra" textAlignment="CENTER" />
+           <Button mnemonicParsing="false" text="Rispondi" textAlignment="CENTER" />
+           <Button id="delete_button" mnemonicParsing="false" text="Elimina" textAlignment="CENTER" />
+       </VBox>
+   </right>
 </BorderPane>

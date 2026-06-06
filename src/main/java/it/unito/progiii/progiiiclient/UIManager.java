@@ -20,13 +20,9 @@ public class UIManager {
             FXMLLoader loader = new FXMLLoader(UIManager.class.getResource("dashboard.fxml"));
             Scene scene = new Scene(loader.load(),600,600);
             DashboardController controller = loader.getController();
-            controller.putParameters(address,inbox);
-            controller.setInbox(inbox);
-            stage.setOnCloseRequest(windowEvent -> {
-                controller.stopScheduler();
-            });
             stage.setTitle(address);
             stage.setScene(scene);
+            controller.putParameters(address,inbox);
             stage.show();
         }catch (IOException e) {
             PopupUtils.showError(e.getClass().getName(),e.getMessage());
@@ -41,8 +37,6 @@ public class UIManager {
             stage.setTitle("Messaggio");
             stage.setScene(scene);
             MessageController controller = loader.getController();
-            controller.setAddress(address);
-            controller.setInbox(inbox);
             controller.setEmail(email);
             stage.show();
         }catch (IOException e) {
@@ -63,6 +57,10 @@ public class UIManager {
         }catch (IOException e) {
             PopupUtils.showError(e.getClass().getName(),e.getMessage());
         }
+    }
+
+    public static void openReply(String address,Email email) {
+
     }
 
 }

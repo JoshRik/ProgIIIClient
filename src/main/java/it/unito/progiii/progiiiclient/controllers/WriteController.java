@@ -1,9 +1,7 @@
 package it.unito.progiii.progiiiclient.controllers;
 
-import it.unito.progiii.progiiiclient.network.MessageBuffer;
+import it.unito.progiii.progiiiclient.network.MessageManager;
 import it.unito.progiii.progiiiclient.utils.AddressUtils;
-import it.unito.progiii.progiiiclient.utils.ConnectUtils;
-import it.unito.progiii.progiiiclient.utils.Constants;
 import it.unito.progiii.progiiiclient.utils.PopupUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -11,13 +9,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.HashMap;
-import java.util.Scanner;
 
-public class WriteController {
+public class WriteController extends MessageManager {
 
     @FXML
     private TextArea contentText;
@@ -30,20 +24,12 @@ public class WriteController {
 
     private String address;
 
-    private MessageBuffer request;
-    private MessageBuffer response;
-
-    @FXML
-    private void initialize() {
-        request = new MessageBuffer();
-        response = new MessageBuffer();
-    }
-
     public void setAddress(String address) {
         this.address = address;
     }
 
-    private void composeRequest() {
+    @Override
+    protected void composeRequest() {
         String to,subject,content;
         to = receiversInput.getText();
         subject = subjectInput.getText();
@@ -57,6 +43,7 @@ public class WriteController {
             request.appendData(line.equals("END") ? "\"END\"" : line);
     }
 
+    @Override
     public void parseResponse() {
         HashMap<String,String> headers = response.getHeaders();
         int status = Integer.parseInt(headers.get("status"));
@@ -66,10 +53,8 @@ public class WriteController {
             PopupUtils.showError("Messaggio non inviato","uno o più indirizzi email non esiste");
         else if(status==1)
             PopupUtils.showError(null,"richiesta malformata");
-        else{
-            PopupUtils.showInfo("Messaggio inviato");
+        else
             close();
-        }
     }
 
 
@@ -81,13 +66,12 @@ public class WriteController {
             PopupUtils.showError("Messaggio non inviato","Uno o più indirizzi email sono stati scritti in forma errata");
         else {
             composeRequest();
-            if(ConnectUtils.communicate(request,response))
+            if(communicate())
                 parseResponse();
             else
                 PopupUtils.showError(null,"Connessione interrotta");
         }
-        request.clear();
-        response.clear();
+        clearAll();
     }
 
     @FXML

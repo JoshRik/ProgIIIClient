@@ -7,10 +7,12 @@ import it.unito.progiii.progiiiclient.state.StateManager;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -30,6 +32,18 @@ public class DashboardController {
     @FXML
     private ListView<Email> inboxView;
 
+    @FXML
+    private Button detailButton;
+
+    @FXML
+    private Button replyButton;
+
+    @FXML
+    private Button forwardButton;
+
+    @FXML
+    private Button deleteButton;
+
     private String address;
     private ObservableList<Email> inbox;
     private StateManager stateManager;
@@ -48,6 +62,10 @@ public class DashboardController {
             case CONNECTED -> Color.GREEN;
             case DISCONNECTED -> Color.RED;
         }));
+        setMouseListener();
+    }
+
+    private void setMouseListener() {
         root.setOnMousePressed(event -> {
             Node target = (Node) event.getTarget();
 
@@ -63,9 +81,7 @@ public class DashboardController {
         });
     }
 
-    public void setInbox(ObservableList<Email> inbox) {
-        this.inbox = inbox;
-        inboxView.setItems(inbox);
+    private void setInboxListener() {
         inboxView.setOnMouseClicked(mouseEvent -> {
             if(mouseEvent.getClickCount()==2) {
                 Email email = inboxView.getSelectionModel().getSelectedItem();
@@ -91,16 +107,21 @@ public class DashboardController {
         userLabel.setText(address);
         pullTask = new PullTask(address,inbox,stateManager);
         inboxView.setItems(inbox);
+        //setInboxListener();
         startScheduler();
+        setCloseOperation();
+    }
+
+    private void setCloseOperation() {
+        Stage stage = (Stage) inboxView.getScene().getWindow();
+        stage.setOnCloseRequest((event) -> {
+            pullScheduler.shutdownNow();
+        });
     }
 
     @FXML
     private void write() {
         UIManager.openWrite(address);
-    }
-
-    public void stopScheduler() {
-        pullScheduler.shutdownNow();
     }
 
 }

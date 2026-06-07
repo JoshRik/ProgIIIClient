@@ -32,7 +32,7 @@ public class PullTask extends MessageManager implements Runnable{
         Email[] newEmails = Constants.GSON.fromJson(content,Email[].class);
         for(Email email:newEmails) {
             if(!inbox.contains(email))
-                inbox.add(email);
+                Platform.runLater(() -> inbox.add(email));
         }
     }
 

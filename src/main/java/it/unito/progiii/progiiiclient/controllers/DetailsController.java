@@ -4,7 +4,7 @@ import it.unito.progiii.progiiiclient.model.Email;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class MessageController {
+public class DetailsController {
 
     @FXML
     private TextArea contentTextArea;

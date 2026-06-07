@@ -52,7 +52,7 @@ public class WriteController extends MessageManager {
         }else if(status==3)
             PopupUtils.showError("Messaggio non inviato","uno o più indirizzi email non esiste");
         else if(status==1)
-            PopupUtils.showError(null,"richiesta malformata");
+            PopupUtils.showError("Messaggio non inviato","richiesta malformata");
         else
             close();
     }
@@ -69,7 +69,7 @@ public class WriteController extends MessageManager {
             if(communicate())
                 parseResponse();
             else
-                PopupUtils.showError(null,"Connessione interrotta");
+                PopupUtils.showError("Messaggio non inviato","Connessione interrotta");
         }
         clearAll();
     }

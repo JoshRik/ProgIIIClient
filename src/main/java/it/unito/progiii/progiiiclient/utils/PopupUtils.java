@@ -6,8 +6,8 @@ public class PopupUtils {
 
     public static void showError(String description, String reason) {
         Alert error = new Alert(Alert.AlertType.ERROR);
-        error.setTitle("Errore");
-        error.setHeaderText(description);
+        error.setTitle(description);
+        error.setHeaderText(null);
         error.setContentText(reason);
         error.showAndWait();
     }

@@ -12,14 +12,14 @@
            </padding>
            <Label text="Rispondi" style="-fx-font-size: 18;-fx-font-weight: bold" />
            <Label text="Inserire il testo nella casella"></Label>
-           <TextArea prefHeight="254.0" prefWidth="600.0" />
-           <CheckBox mnemonicParsing="false" text="Rispondi a tutti" />
+           <TextArea prefHeight="254.0" prefWidth="600.0" fx:id="contentTextArea" />
+           <CheckBox mnemonicParsing="false" text="Rispondi a tutti" fx:id="replyAll" />
        </VBox>
    </center>
    <bottom>
        <HBox alignment="CENTER" prefHeight="43.0" prefWidth="600.0" BorderPane.alignment="CENTER" spacing="36" >
-           <Button mnemonicParsing="false" text="Rispondi" />
-           <Button mnemonicParsing="false" text="Annulla" />
+           <Button mnemonicParsing="false" text="Rispondi" onAction="#submit" />
+           <Button mnemonicParsing="false" text="Annulla" onAction="#closeStage" />
        </HBox>
    </bottom>
 </BorderPane>

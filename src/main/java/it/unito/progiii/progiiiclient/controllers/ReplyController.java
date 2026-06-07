@@ -1,7 +1,6 @@
 package it.unito.progiii.progiiiclient.controllers;
 
 import it.unito.progiii.progiiiclient.model.Email;
-import it.unito.progiii.progiiiclient.network.MessageBuffer;
 import it.unito.progiii.progiiiclient.network.MessageManager;
 import it.unito.progiii.progiiiclient.utils.PopupUtils;
 import javafx.fxml.FXML;
@@ -39,7 +38,7 @@ public class ReplyController extends MessageManager {
         else if(status==4)
             PopupUtils.showError("Risposta non inviata","Messaggio inesistente");
         else
-            PopupUtils.showInfo("risposta inviata con successo");
+            closeStage();
     }
 
     @Override
@@ -48,10 +47,22 @@ public class ReplyController extends MessageManager {
         request.appendData("from="+address);
         request.appendData("id="+email.getId());
         request.appendData("CONTENT");
-        for (String line :contentTextArea.getText().split("\n"))
+        for (String line :contentTextArea.getText().split("\n")) {
+            System.out.println(line);
             request.appendData(line.equals("END") ? "\"END\"" : line);
+        }
     }
 
+    @FXML
+    private void submit() {
+        composeRequest();
+        if(communicate())
+            parseResponse();
+        else
+            PopupUtils.showError("Messaggio non inviato","Errore di connessione");
+    }
+
+    @FXML
     private void closeStage() {
         Stage stage = (Stage) contentTextArea.getScene().getWindow();
         stage.close();

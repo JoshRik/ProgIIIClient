@@ -28,7 +28,7 @@
        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30" BorderPane.alignment="CENTER">
          <Button mnemonicParsing="false" text="Dettagli" onAction="#details" />
            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" text="Inoltra" textAlignment="CENTER"  onAction="#forward" />
-           <Button mnemonicParsing="false" text="Rispondi" textAlignment="CENTER" />
+           <Button mnemonicParsing="false" text="Rispondi" textAlignment="CENTER" onAction="#reply" />
            <Button id="delete_button" mnemonicParsing="false" text="Elimina" textAlignment="CENTER" onAction="#delete" />
        </VBox>
    </right>

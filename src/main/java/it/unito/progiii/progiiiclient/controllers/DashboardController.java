@@ -181,8 +181,31 @@ public class DashboardController extends MessageManager {
                         PopupUtils.showError("Innoltro non riuscito","Problema di connessione al server");
                 }
             });
-            currentSelected = null;
-            inboxView.getSelectionModel().clearSelection();
+            resetSelection();
+        }
+    }
+
+    private void resetSelection() {
+        currentSelected = null;
+        inboxView.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void reply() {
+        if(currentSelected!=null) {
+            Stage stage = new Stage();
+            try {
+                FXMLLoader loader = new FXMLLoader(this.getClass().getResource(Constants.CP_ROOT+"reply.fxml"));
+                Scene scene = new Scene(loader.load(),600,600);
+                ReplyController controller = loader.getController();
+                controller.setAddress(address);
+                controller.setEmail(currentSelected);
+                stage.setTitle("Scrivi Email");
+                stage.setScene(scene);
+                stage.show();
+            }catch (IOException e) {
+                PopupUtils.showError(e.getClass().getName(),e.getMessage());
+            }
         }
     }
 
@@ -215,8 +238,7 @@ public class DashboardController extends MessageManager {
         else {
             if(operation.equals("delete")) {
                 inbox.remove(currentSelected);
-                currentSelected = null;
-                inboxView.getSelectionModel().clearSelection();
+                resetSelection();
             }
         }
     }

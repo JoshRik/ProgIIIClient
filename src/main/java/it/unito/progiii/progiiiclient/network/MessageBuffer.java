@@ -33,9 +33,9 @@ public class MessageBuffer {
         for (int J=0;J<index;J++) {
             String header,key,value;
             header = messageData.get(J);
-            String[] headerComponents = header.split("=");
-            key = headerComponents[0];
-            value = headerComponents[1];
+            int equalsIndex = header.indexOf("=");
+            key = header.substring(0,equalsIndex);
+            value = header.substring(equalsIndex+1);
             headers.put(key,value);
         }
         return headers;

@@ -47,10 +47,8 @@ public class ReplyController extends MessageManager {
         request.appendData("from="+address);
         request.appendData("id="+email.getId());
         request.appendData("CONTENT");
-        for (String line :contentTextArea.getText().split("\n")) {
-            System.out.println(line);
+        for (String line :contentTextArea.getText().split("\n"))
             request.appendData(line.equals("END") ? "\"END\"" : line);
-        }
     }
 
     @FXML

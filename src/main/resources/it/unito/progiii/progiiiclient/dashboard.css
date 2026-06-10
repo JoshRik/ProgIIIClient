@@ -8,12 +8,12 @@
     -fx-effect: none;
 }
 
-#write_button{
+.green_button{
     -fx-background-color: green;
     -fx-text-fill: white;
 }
 
-#delete_button{
+.red_button{
     -fx-text-fill: white;
     -fx-background-color: red;
 }

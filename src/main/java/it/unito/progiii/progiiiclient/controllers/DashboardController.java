@@ -162,17 +162,25 @@ public class DashboardController extends MessageManager {
 
     @FXML
     private void forward() {
+        openForward("");
+    }
+
+    private void openForward(String address) {
         if(currentSelected!=null) {
             operation="forward";
-            TextInputDialog dialog = new TextInputDialog();
+            TextInputDialog dialog = new TextInputDialog(address);
             dialog.setHeaderText("Inserire destinatari");
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(value -> {
                 String recipients = value.trim();
-                if(recipients.isEmpty())
-                    PopupUtils.showError("Innoltro non riuscito","Inserire una serie di indirizzi email");
-                else if(!AddressUtils.checkReceiversValid(recipients))
-                    PopupUtils.showError("Innoltro non riuscito","sono stati inseriti indirizzi email non validi");
+                if(recipients.isEmpty()) {
+                    PopupUtils.showError("Innoltro non riuscito", "Inserire una serie di indirizzi email");
+                    openForward(recipients);
+                }
+                else if(!AddressUtils.checkReceiversValid(recipients)){
+                    PopupUtils.showError("Innoltro non riuscito", "sono stati inseriti indirizzi email non validi");
+                    openForward(recipients);
+                }
                 else{
                     composeForwardRequest(recipients);
                     if(communicate())
@@ -229,8 +237,11 @@ public class DashboardController extends MessageManager {
             PopupUtils.showError("Operazione fallita","richiesta malformata");
         else if(status == 2)
             PopupUtils.showError("Operazione fallita","operazione sconosciuta");
-        else if(status == 3)
-            PopupUtils.showError("Operazione fallita","uno o più indirizzi email non esiste");
+        else if(status == 3) {
+            PopupUtils.showError("Operazione fallita", "uno o più indirizzi email non esiste");
+            if(operation.equals("forward"))
+                openForward(response.getHeaders().get("to"));
+        }
         else if(status == 4)
             PopupUtils.showError("Operazioen fallita","messaggio inesistente");
         else if(status == 5)
@@ -241,5 +252,12 @@ public class DashboardController extends MessageManager {
                 resetSelection();
             }
         }
+        clearAll();
     }
+
+    private void closeStage() {
+        Stage stage = (Stage) inboxView.getScene().getWindow();
+        stage.close();
+    }
+
 }

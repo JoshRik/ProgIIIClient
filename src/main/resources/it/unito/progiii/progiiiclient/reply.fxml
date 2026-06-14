@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" fx:controller="it.unito.progiii.progiiiclient.controllers.ReplyController" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.progiii.progiiiclient.controllers.ReplyController">
    <center>
-       <VBox prefHeight="427.0" prefWidth="600.0" BorderPane.alignment="CENTER" spacing="20">
+       <VBox prefHeight="427.0" prefWidth="600.0" spacing="20" BorderPane.alignment="CENTER">
            <padding>
-               <Insets topRightBottomLeft="20"/>
+               <Insets topRightBottomLeft="20" />
            </padding>
-           <Label text="Rispondi" style="-fx-font-size: 18;-fx-font-weight: bold" />
-           <Label text="Inserire il testo nella casella"></Label>
-           <TextArea prefHeight="254.0" prefWidth="600.0" fx:id="contentTextArea" />
-           <CheckBox mnemonicParsing="false" text="Rispondi a tutti" fx:id="replyAll" />
+         <Label fx:id="subjectLabel" style="-fx-font-size: 18;-fx-font-weight: bold" />
+         <Label fx:id="senderLabel" />
+         <Label fx:id="contentLabel" style="-fx-font-size: 14" />
+           <Label style="-fx-font-size: 18;-fx-font-weight: bold" text="Rispondi" />
+           <Label text="Inserire il testo nella casella" />
+           <TextArea fx:id="contentTextArea" />
+           <CheckBox fx:id="replyAll" mnemonicParsing="false" text="Rispondi a tutti" />
        </VBox>
    </center>
    <bottom>
-       <HBox alignment="CENTER" prefHeight="43.0" prefWidth="600.0" BorderPane.alignment="CENTER" spacing="36" >
-           <Button mnemonicParsing="false" text="Rispondi" onAction="#submit" />
-           <Button mnemonicParsing="false" text="Annulla" onAction="#closeStage" />
+       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="610.0" spacing="36" BorderPane.alignment="CENTER">
+           <Button mnemonicParsing="false" onAction="#submit" text="Rispondi" />
+           <Button mnemonicParsing="false" onAction="#closeStage" text="Annulla" />
        </HBox>
    </bottom>
 </BorderPane>

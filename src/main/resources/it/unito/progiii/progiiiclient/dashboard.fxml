@@ -24,8 +24,8 @@
           </padding>
           <Label fx:id="stateLabel" />
           <Region HBox.hgrow="ALWAYS" />
-         <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" styleClass="red_button" text="Esci" />
           <Label id="user-label" fx:id="userLabel" />
+          <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" styleClass="red_button" text="Esci" onAction="#logout" />
       </HBox>
    </top>
 </BorderPane>

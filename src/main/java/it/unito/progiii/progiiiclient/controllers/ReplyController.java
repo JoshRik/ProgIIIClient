@@ -5,12 +5,22 @@ import it.unito.progiii.progiiiclient.network.MessageManager;
 import it.unito.progiii.progiiiclient.utils.PopupUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
 
 public class ReplyController extends MessageManager {
+
+    @FXML
+    private Label subjectLabel;
+
+    @FXML
+    private Label senderLabel;
+
+    @FXML
+    private Label contentLabel; //label of message
 
     @FXML
     private TextArea contentTextArea;
@@ -23,6 +33,9 @@ public class ReplyController extends MessageManager {
 
     public void setEmail(Email email) {
         this.email = email;
+        contentLabel.setText(email.getText());
+        subjectLabel.setText(email.getSubject());
+        senderLabel.setText(email.getSender());
     }
 
     public void setAddress(String address) {

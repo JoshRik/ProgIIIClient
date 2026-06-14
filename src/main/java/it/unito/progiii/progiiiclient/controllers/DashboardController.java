@@ -1,5 +1,6 @@
 package it.unito.progiii.progiiiclient.controllers;
 
+import it.unito.progiii.progiiiclient.MailClient;
 import it.unito.progiii.progiiiclient.model.Email;
 import it.unito.progiii.progiiiclient.network.MessageManager;
 import it.unito.progiii.progiiiclient.network.PullTask;
@@ -7,6 +8,7 @@ import it.unito.progiii.progiiiclient.state.StateManager;
 import it.unito.progiii.progiiiclient.utils.AddressUtils;
 import it.unito.progiii.progiiiclient.utils.Constants;
 import it.unito.progiii.progiiiclient.utils.PopupUtils;
+import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -113,36 +115,28 @@ public class DashboardController extends MessageManager {
     }
 
     @FXML
-    private void write() {
+    private void write() throws IOException {
         Stage stage = new Stage();
-        try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource(Constants.CP_ROOT+"write.fxml"));
-            Scene scene = new Scene(loader.load(),600,600);
-            WriteController controller = loader.getController();
-            controller.setAddress(address);
-            stage.setTitle("Scrivi Email");
-            stage.setScene(scene);
-            stage.show();
-        }catch (IOException e) {
-            PopupUtils.showError(e.getClass().getName(),e.getMessage());
-        }
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(Constants.CP_ROOT+"write.fxml"));
+        Scene scene = new Scene(loader.load(),600,600);
+        WriteController controller = loader.getController();
+        controller.setAddress(address);
+        stage.setTitle("Scrivi Email");
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    private void details() {
+    private void details() throws IOException {
         if(currentSelected!=null) {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource(Constants.CP_ROOT+"details.fxml"));
-            try {
-                Scene scene = new Scene(loader.load(),580,580);
-                DetailsController controller = loader.getController();
-                controller.setEmail(currentSelected);
-                stage.setTitle("Visualizza messaggio");
-                stage.setScene(scene);
-                stage.show();
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
+            Scene scene = new Scene(loader.load(),580,580);
+            DetailsController controller = loader.getController();
+            controller.setEmail(currentSelected);
+            stage.setTitle("Visualizza messaggio");
+            stage.setScene(scene);
+            stage.showAndWait();
         }
     }
 
@@ -169,7 +163,7 @@ public class DashboardController extends MessageManager {
         if(currentSelected!=null) {
             operation="forward";
             TextInputDialog dialog = new TextInputDialog(address);
-            dialog.setHeaderText("Inserire destinatari");
+            dialog.setHeaderText("Inserire destinatari (separati da spazi)");
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(value -> {
                 String recipients = value.trim();
@@ -199,21 +193,17 @@ public class DashboardController extends MessageManager {
     }
 
     @FXML
-    private void reply() {
+    private void reply() throws IOException {
         if(currentSelected!=null) {
             Stage stage = new Stage();
-            try {
-                FXMLLoader loader = new FXMLLoader(this.getClass().getResource(Constants.CP_ROOT+"reply.fxml"));
-                Scene scene = new Scene(loader.load(),600,600);
-                ReplyController controller = loader.getController();
-                controller.setAddress(address);
-                controller.setEmail(currentSelected);
-                stage.setTitle("Scrivi Email");
-                stage.setScene(scene);
-                stage.show();
-            }catch (IOException e) {
-                PopupUtils.showError(e.getClass().getName(),e.getMessage());
-            }
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource(Constants.CP_ROOT+"reply.fxml"));
+            Scene scene = new Scene(loader.load(),600,600);
+            ReplyController controller = loader.getController();
+            controller.setAddress(address);
+            controller.setEmail(currentSelected);
+            stage.setTitle("Scrivi Email");
+            stage.setScene(scene);
+            stage.show();
         }
     }
 
@@ -237,11 +227,8 @@ public class DashboardController extends MessageManager {
             PopupUtils.showError("Operazione fallita","richiesta malformata");
         else if(status == 2)
             PopupUtils.showError("Operazione fallita","operazione sconosciuta");
-        else if(status == 3) {
+        else if(status == 3)
             PopupUtils.showError("Operazione fallita", "uno o più indirizzi email non esiste");
-            if(operation.equals("forward"))
-                openForward(response.getHeaders().get("to"));
-        }
         else if(status == 4)
             PopupUtils.showError("Operazioen fallita","messaggio inesistente");
         else if(status == 5)
@@ -258,6 +245,18 @@ public class DashboardController extends MessageManager {
     private void closeStage() {
         Stage stage = (Stage) inboxView.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    private void logout() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(MailClient.class.getResource(Constants.CP_ROOT+"login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 550, 550);
+        stage.setTitle("JMail!");
+        stage.setScene(scene);
+        stage.show();
+        closeStage();
+        pullScheduler.shutdownNow();
     }
 
 }

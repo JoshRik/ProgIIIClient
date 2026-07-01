@@ -4,6 +4,7 @@ import it.unito.progiii.progiiiclient.utils.Constants;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -44,11 +45,10 @@ public abstract class MessageManager {
 
     protected boolean communicate() {
         boolean flag = true;
-        try (
-                Socket socket = new Socket("localhost", Constants.PORT);
-                Scanner in = new Scanner(socket.getInputStream());
-                PrintWriter out = new PrintWriter(socket.getOutputStream(),true)
-        ) {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress("localhost",Constants.PORT));
+            Scanner in = new Scanner(socket.getInputStream());
+            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
             sendRequest(out);
             receiveResponse(in);
         }catch (IOException e) {

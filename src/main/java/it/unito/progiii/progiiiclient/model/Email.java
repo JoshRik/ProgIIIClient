@@ -54,11 +54,6 @@ public class Email {
             return false;
     }
 
-    public void addReceiver(String receiver) {
-        if(receivers.contains(receiver))
-            receivers.add(receiver);
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

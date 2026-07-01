@@ -49,10 +49,6 @@ public class LoginController extends MessageManager {
         }
     }
 
-    private void openWrite() {
-
-    }
-
     @Override
     protected void parseResponse() {
         HashMap<String,String> headers = response.getHeaders();
@@ -64,7 +60,7 @@ public class LoginController extends MessageManager {
             openDashboard(inbox);
             closeStage();
         }else
-            PopupUtils.showError("Accesso fallito","Indirizzo email non trovato");
+            PopupUtils.showError("Accesso fallito","Indirizzo email inserito inesistente");
     }
 
 

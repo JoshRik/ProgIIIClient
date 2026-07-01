@@ -8,15 +8,11 @@ public class StateManager {
 
     public StateManager() {
         state = new SimpleObjectProperty<>();
-        state.set(ConnectState.CONNECTED);
+        state.set(ConnectState.DISCONNECTED);
     }
 
     public SimpleObjectProperty<ConnectState> stateProperty() {
         return state;
-    }
-
-    public ConnectState getState() {
-        return state.get();
     }
 
     public void setState(ConnectState state) {

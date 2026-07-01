@@ -102,6 +102,7 @@ public class DashboardController extends MessageManager {
         userLabel.setText(address);
         pullTask = new PullTask(address,inbox,stateManager);
         inboxView.setItems(inbox);
+
         setInboxListener();
         startScheduler();
         setCloseOperation();
@@ -227,17 +228,18 @@ public class DashboardController extends MessageManager {
             PopupUtils.showError("Operazione fallita","richiesta malformata");
         else if(status == 2)
             PopupUtils.showError("Operazione fallita","operazione sconosciuta");
-        else if(status == 3)
-            PopupUtils.showError("Operazione fallita", "uno o più indirizzi email non esiste");
-        else if(status == 4)
+        else if(status == 3) {
+            if(response.hasContent())
+                PopupUtils.showError("Operazione fallita","Uno o più indirizzi email non esiste:\n"+response.getContent().replace(",","\n"));
+            else
+                PopupUtils.showError("Operazione falluta","Account non registrato");
+        }else if(status == 4)
             PopupUtils.showError("Operazioen fallita","messaggio inesistente");
         else if(status == 5)
             PopupUtils.showError("Operazione fallita","Errore interno del server");
-        else {
-            if(operation.equals("delete")) {
-                inbox.remove(currentSelected);
-                resetSelection();
-            }
+        if(operation.equals("delete")) {
+            inbox.remove(currentSelected);
+            resetSelection();
         }
         clearAll();
     }

@@ -49,9 +49,12 @@ public class WriteController extends MessageManager {
         int status = Integer.parseInt(headers.get("status"));
         if(status==5) {
             PopupUtils.showError("Messaggio non inviato","Errore interno del server");
-        }else if(status==3)
-            PopupUtils.showError("Messaggio non inviato","uno o più indirizzi email non esiste");
-        else if(status==1)
+        }else if(status==3){
+            if(response.hasContent())
+                PopupUtils.showError("Operazione fallita","Uno o più indirizzi email non esiste:\n"+response.getContent().replace(",","\n"));
+            else
+                PopupUtils.showError("Operazione falluta","Account non registrato");
+        }else if(status==1)
             PopupUtils.showError("Messaggio non inviato","richiesta malformata");
         else
             close();

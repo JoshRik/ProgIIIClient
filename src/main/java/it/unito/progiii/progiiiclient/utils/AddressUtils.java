@@ -7,7 +7,7 @@ public class AddressUtils {
     }
 
     public static boolean checkReceiversValid(String receivers) {
-        for (String receiver:receivers.split(" ")) {
+        for (String receiver:receivers.split(",")) {
             if(!checkAddressValid(receiver))
                 return false;
         }

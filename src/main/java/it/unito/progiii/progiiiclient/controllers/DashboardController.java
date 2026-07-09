@@ -163,7 +163,7 @@ public class DashboardController extends MessageManager {
         if(currentSelected!=null) {
             operation="forward";
             TextInputDialog dialog = new TextInputDialog(address);
-            dialog.setHeaderText("Inserire destinatari (separati da spazi)");
+            dialog.setHeaderText("Inserire destinatari (separati da virgole)");
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(value -> {
                 String recipients = value.trim();

@@ -53,10 +53,6 @@ public class MessageBuffer {
         return sb.toString();
     }
 
-    public int numberOfLines() {
-        return messageData.size();
-    }
-
     public void clear() {
         messageData.clear();
     }

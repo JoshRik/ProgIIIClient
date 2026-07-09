@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.progiii.progiiiclient.controllers.ReplyController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unito.progiii.progiiiclient.controllers.ReplyController">
    <center>
        <VBox prefHeight="427.0" prefWidth="600.0" spacing="20" BorderPane.alignment="CENTER">
            <padding>
@@ -12,7 +12,11 @@
            </padding>
          <Label fx:id="subjectLabel" style="-fx-font-size: 18;-fx-font-weight: bold" />
          <Label fx:id="senderLabel" />
-         <Label fx:id="contentLabel" style="-fx-font-size: 14" />
+         <ScrollPane prefHeight="200.0" prefWidth="200.0">
+            <content>
+               <Label fx:id="contentLabel" />
+            </content>
+         </ScrollPane>
            <Label style="-fx-font-size: 18;-fx-font-weight: bold" text="Rispondi" />
            <Label text="Inserire il testo nella casella" />
            <TextArea fx:id="contentTextArea" />

@@ -56,8 +56,10 @@ public class WriteController extends MessageManager {
                 PopupUtils.showError("Operazione falluta","Account non registrato");
         }else if(status==1)
             PopupUtils.showError("Messaggio non inviato","richiesta malformata");
-        else
+        else {
             close();
+            PopupUtils.showNotification("Messaggio inviato");
+        }
     }
 
 

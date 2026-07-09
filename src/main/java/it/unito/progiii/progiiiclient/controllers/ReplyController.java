@@ -50,8 +50,10 @@ public class ReplyController extends MessageManager {
             PopupUtils.showError("Risposta non inviata","Errore interno del server");
         else if(status==4)
             PopupUtils.showError("Risposta non inviata","Messaggio inesistente");
-        else
+        else{
             closeStage();
+            PopupUtils.showNotification("Risposta inviata");
+        }
     }
 
     @Override

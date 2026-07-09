@@ -1,5 +1,6 @@
 package it.unito.progiii.progiiiclient.utils;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 public class PopupUtils {
@@ -12,11 +13,21 @@ public class PopupUtils {
         error.showAndWait();
     }
 
-    public static void showInfo(String message) {
+    public static void showNotification(String message) {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
-        info.setTitle("Informazione");
+        info.setTitle("Notifica");
         info.setContentText(message);
-        info.showAndWait();
+        info.initOwner(null);
+        info.show();
+
+        // Chiudi automaticamente dopo 2.5 secondi
+        new Thread(() -> {
+            try { Thread.sleep(2500); }
+            catch (InterruptedException ignored) {}
+            Platform.runLater(info::close);
+        }).start();
+
+
     }
 
 }

@@ -102,7 +102,6 @@ public class DashboardController extends MessageManager {
         userLabel.setText(address);
         pullTask = new PullTask(address,inbox,stateManager);
         inboxView.setItems(inbox);
-
         setInboxListener();
         startScheduler();
         setCloseOperation();
@@ -237,6 +236,10 @@ public class DashboardController extends MessageManager {
             PopupUtils.showError("Operazioen fallita","messaggio inesistente");
         else if(status == 5)
             PopupUtils.showError("Operazione fallita","Errore interno del server");
+        else {
+            if(operation.equals("forward"))
+                PopupUtils.showNotification("Messaggio inoltrato");
+        }
         if(operation.equals("delete")) {
             inbox.remove(currentSelected);
             resetSelection();
